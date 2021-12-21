@@ -78,7 +78,7 @@ def project_setup(cfg):
 
     ## Project file example to make: "projectID_YYYYMMDDtHHMM-jobID.psx"
     timestamp = stamp_time()
-    run_id = "_".join([run_name,timestamp])
+    run_id = "_".join([run_name])
     # TODO: If there is a slurm JobID, append to time (separated with "-", not "_"). This will keep jobs initiated in the same minute distinct
 
     project_file = os.path.join(cfg["project_path"], '.'.join([run_id, 'psx']) )
@@ -100,6 +100,7 @@ def project_setup(cfg):
         chunk = doc.addChunk()
         chunk.crs = Metashape.CoordinateSystem(cfg["project_crs"])
         chunk.marker_crs = Metashape.CoordinateSystem(cfg["addGCPs"]["gcp_crs"])
+        chunk.label = run_name
 
     # Save doc doc as new project (even if we opened an existing project, save as a separate one so the existing project remains accessible in its original state)
     doc.save(project_file)
